@@ -6,7 +6,6 @@
     group_id: sg-99184afe
     key_name: ireland-infra
     region: eu-west-1
-    vpc_id: vpc-9e17a0fa
 
    tasks:
    
@@ -21,7 +20,6 @@
        count: 1
        instance_tags: 
          Name: WEB-stage
-       vpc_id: "{{ vpc_id }}"
        vpc_subnet_id: "{{ item }}"
        assign_public_ip: yes
      with_items: 
