@@ -1,0 +1,24 @@
+ - name: Deployment
+   hosts: all
+
+   vars:
+    image: "{{ ami_id }}"
+    group_id: sg-99184afe
+    key_name: ireland-infra
+
+   tasks:
+   
+   - name: Starting instances
+     ec2:
+       instance_type: t2.micro
+       wait: yes
+       count: 1
+       instance_tags: 
+         Name: WEB-stage
+       vpc_subnet_id: "{{ item }}"
+       assign_public_ip: yes
+     with_items: 
+       - subnet-7cdd5f0a
+       - subnet-2cc81a74
+       - subnet-37b42753
+  
