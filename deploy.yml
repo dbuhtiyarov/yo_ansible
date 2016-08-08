@@ -13,6 +13,9 @@
      ec2:
        instance_type: t2.micro
        wait: yes
+       region: "{{ region }}"
+       key_name: "{{ key_name }}"
+       group_id: "{{ group_id }}"
        count: 1
        instance_tags: 
          Name: WEB-stage
