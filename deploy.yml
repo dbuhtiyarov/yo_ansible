@@ -14,7 +14,7 @@
      ec2:
        instance_type: t2.micro
        wait: yes
-       wait_timeout: 40
+       wait_timeout: 150
        region: "{{ region }}"
        key_name: "{{ key_name }}"
        group_id: "{{ group_id }}"
