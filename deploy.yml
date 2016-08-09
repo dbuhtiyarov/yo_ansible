@@ -14,7 +14,6 @@
      ec2:
        instance_type: t2.micro
        wait: yes
-       wait_timeout: 150
        region: "{{ region }}"
        key_name: "{{ key_name }}"
        group_id: "{{ group_id }}"
@@ -46,6 +45,7 @@
       module: ec2_elb
       instance_id: "{{ item.id }}"
       ec2_elbs: WEB-stage
+      wait: yes
       state: present
       region: "{{ region }}"
      with_items: "{{ ec2_new.results.0.instances }}"
