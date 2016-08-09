@@ -34,7 +34,7 @@
    - name: Check current list in balancer
      action:
       module: ec2_elb_facts
-      ec2_elbs: WEB-stage
+      name: WEB-stage
      register: elb_facts
      
   
