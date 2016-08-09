@@ -1,4 +1,4 @@
- - name: Deployment
+ - name: Deployment WEB-stage infra
    hosts: all
 
    vars:
@@ -6,11 +6,11 @@
     group_id: sg-99184afe
     key_name: ireland-infra
     region: eu-west-1
-    create: false
+    create: true
 
    tasks:
    
-   - name: Starting instances
+   - name: Starting new instances
      ec2:
        instance_type: t2.micro
        wait: yes
@@ -31,11 +31,18 @@
      when: create
 
 
-   - name: Check current list in balancer
+   - name: Check current list of ec-2 instances in balancer
      action:
       module: ec2_elb_facts
       names: WEB-stage
       region: "{{ region }}"
      register: elb_facts
      
-  
+   - name: Add new instances to balancer
+     local_action:
+      module: ec2_elb
+      instance_id: "{{ item.instance_ids }}"
+      ec2_elbs: WEB-stage
+      state: present
+      region: "{{ region }}"
+     with_items: ec2_new
