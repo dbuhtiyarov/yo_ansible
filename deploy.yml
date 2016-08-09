@@ -25,8 +25,8 @@
        assign_public_ip: yes
      with_items: 
        - subnet-7cdd5f0a
-       - subnet-2cc81a74
-       - subnet-37b42753
+#       - subnet-2cc81a74
+#       - subnet-37b42753
      register: ec2_new
      when: create
 
