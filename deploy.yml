@@ -6,6 +6,7 @@
     group_id: sg-99184afe
     key_name: ireland-infra
     region: eu-west-1
+    create: false
 
    tasks:
    
@@ -26,4 +27,14 @@
        - subnet-7cdd5f0a
        - subnet-2cc81a74
        - subnet-37b42753
+     register: ec2_new
+     when: create
+
+
+   - name: Check current list in balancer
+     local_action:
+      module: ec2_elb
+      ec2_elbs: WEB-stage
+      state: present
+     
   
