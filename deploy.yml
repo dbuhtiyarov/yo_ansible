@@ -6,7 +6,7 @@
     group_id: sg-99184afe
     key_name: ireland-infra
     region: eu-west-1
-    create: true
+    create: false
 
    tasks:
    
@@ -35,6 +35,7 @@
        var: "{{ ec2_new.results }}"
        key: 'instances'
      register: instances_list
+     when: create
 
    - name: Check current list of ec-2 instances in balancer
      action:
@@ -44,6 +45,10 @@
      register: elb_facts
 
    - debug: msg="instances_list={{ instances_list }}"
+   - shell: 
+       echo "in service{{item}}"
+     with_items: "{{ elb_facts.elbs.0.instances }}"
+     
 
    - name: Add new instances to balancer
      local_action:
@@ -55,3 +60,16 @@
       state: present
       region: "{{ region }}"
      with_items: "{{ instances_list.unpacked }}"
+     when: create
+
+   - name: Remove old instances from balancer
+     local_action:
+      module: ec2_elb
+      instance_id: "{{ item.id }}"
+      ec2_elbs: WEB-stage
+      wait: yes
+      wait_timeout: 120
+      state: present
+      region: "{{ region }}"
+     with_items: "{{ instances_list.unpacked }}" 
+     when: create
