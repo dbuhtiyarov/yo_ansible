@@ -38,12 +38,12 @@
       region: "{{ region }}"
      register: elb_facts
 
-   - debug: msg="ec2_new={{ ec2_new.results.0 }}"
+   - debug: msg="ec2_new={{ ec2_new.results.0.instances }}"
      
    - name: Add new instances to balancer
      local_action:
       module: ec2_elb
-      instance_id: "{{ item.instances.id }}"
+      instance_id: "{{ item.id }}"
       ec2_elbs: WEB-stage
       state: present
       region: "{{ region }}"
