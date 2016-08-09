@@ -32,9 +32,9 @@
 
 
    - name: Check current list in balancer
-     local_action:
-      module: ec2_elb
+     action:
+      module: ec2_elb_facts
       ec2_elbs: WEB-stage
-      state: present
+     register: elb_facts
      
   
