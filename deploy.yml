@@ -12,13 +12,13 @@
    
    - name: Starting new instances
      ec2:
-       instance_type: t2.medium
+       instance_type: t2.micro
        wait: yes
        region: "{{ region }}"
        key_name: "{{ key_name }}"
        group_id: "{{ group_id }}"
        image: "{{ image }}"
-       count: 2
+       count: 1
        instance_tags: 
          Name: WEB-stage
        vpc_subnet_id: "{{ item }}"
@@ -30,6 +30,11 @@
      register: ec2_new
      when: create
 
+   - name: Make plain list of instances
+     structure_unpack:
+       var: "{{ ec2_new.results }}"
+       key: 'instances'
+     register: instances_list
 
    - name: Check current list of ec-2 instances in balancer
      action:
@@ -38,11 +43,7 @@
       region: "{{ region }}"
      register: elb_facts
 
-   - debug: msg="ec2_new={{ ec2_new }}"
-
-   - debug: msg="{{ item }}"
-     with_items: "{ % for subnet in ec2_new.results %} subnet.instances { % endfor % }"
- 
+   - debug: msg="instances_list={{ instances_list }}"
 
    - name: Add new instances to balancer
      local_action:
@@ -53,4 +54,4 @@
       wait_timeout: 120
       state: present
       region: "{{ region }}"
-     with_items: "{ % for subnet in ec2_new.results %} subnet.instances { % endfor % }"
+     with_items: "{{ instances_list.result.unpacked }}"
