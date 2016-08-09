@@ -35,6 +35,7 @@
      action:
       module: ec2_elb_facts
       names: WEB-stage
+      region: "{{ region }}"
      register: elb_facts
      
   
