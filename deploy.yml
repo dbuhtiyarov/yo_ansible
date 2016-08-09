@@ -18,7 +18,7 @@
        key_name: "{{ key_name }}"
        group_id: "{{ group_id }}"
        image: "{{ image }}"
-       count: 1
+       count: 2
        instance_tags: 
          Name: WEB-stage
        vpc_subnet_id: "{{ item }}"
