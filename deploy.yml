@@ -54,4 +54,4 @@
       wait_timeout: 120
       state: present
       region: "{{ region }}"
-     with_items: "{{ instances_list.result.unpacked }}"
+     with_items: "{{ instances_list.unpacked }}"
