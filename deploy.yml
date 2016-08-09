@@ -41,9 +41,7 @@
    - debug: msg="ec2_new={{ ec2_new }}"
 
    - debug: msg="{{ item }}"
-     with_subelements:
-      - "{{ ec2_new.results }}"
-      - "instances"
+     with_items: "{ % for subnet in ec2_new.results %} subnet.instances { % endfor % }"
  
 
    - name: Add new instances to balancer
@@ -55,6 +53,4 @@
       wait_timeout: 120
       state: present
       region: "{{ region }}"
-     with_subelements: 
-      - "{{ ec2_new.results }}"
-      - "instances"
+     with_items: "{ % for subnet in ec2_new.results %} subnet.instances { % endfor % }"
