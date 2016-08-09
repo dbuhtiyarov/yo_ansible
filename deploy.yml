@@ -12,7 +12,7 @@
    
    - name: Starting new instances
      ec2:
-       instance_type: t2.micro
+       instance_type: t2.medium
        wait: yes
        region: "{{ region }}"
        key_name: "{{ key_name }}"
