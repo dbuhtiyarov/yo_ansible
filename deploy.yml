@@ -45,4 +45,4 @@
       ec2_elbs: WEB-stage
       state: present
       region: "{{ region }}"
-     with_items: ec2_new
+     with_items: "{{ ec2_new }}"
