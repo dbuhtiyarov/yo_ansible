@@ -1,5 +1,6 @@
  - name: Deployment WEB-stage infra
    hosts: all
+   gather_facts: no
 
    vars:
     image: "{{ ami_id }}"
