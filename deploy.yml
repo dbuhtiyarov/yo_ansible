@@ -38,7 +38,7 @@
       region: "{{ region }}"
      register: elb_facts
 
-   - debug: msg="ec2_new={{ ec2_new.results.0.instances }}"
+   - debug: msg="ec2_new={{ ec2_new }}"
      
    - name: Add new instances to balancer
      local_action:
